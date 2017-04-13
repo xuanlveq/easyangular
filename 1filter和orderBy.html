@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+</head>
+<body>
+    <div ng-controller="huaji">
+        <input type="text" name="" ng-model="search">
+        <button ng-click="paixu()">反排序</button>
+        <ul>
+            <li ng-repeat="p in arr | filter:{ name:search} | orderBy:'age':bool" >name:{{p.name}} , age:{{p.age}} , skill:{{p.skill}}</li>
+        </ul>
+    </div>
+    
+</body>
+</html>
+<script type="text/javascript" src="../lib/angular.js"></script>
+<script type="text/javascript">
+    var app = angular.module('app',[]);
+    app.controller('huaji',function($scope){
+        $scope.search = '';
+        $scope.arr = [
+                {name:'huaji',age:18,skill:'HTML'},
+                {name:'huaji',age:17,skill:'css'},
+                {name:'huaji',age:19,skill:'jquery'},
+                {name:'huaji',age:16,skill:'angular'},
+                {name:'老胡',age:28,skill:'css'},
+                {name:'老雷',age:38,skill:'angular'},
+                {name:'老梁',age:17,skill:'jquery'}
+                ];
+
+        $scope.bool = false;
+        $scope.paixu=function(){
+            $scope.bool = !$scope.bool;
+        }
+
+    })
+</script>

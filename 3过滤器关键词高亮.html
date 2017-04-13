@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div ng-controller="jiako">
+        <input type="text" ng-model="keyword">
+        <p ng-bind-html = "text | hi : keyword | whtml"></p>
+    </div>
+</body>
+</html>
+<script type="text/javascript" src="../lib/angular.js"></script>
+<script type="text/javascript">
+
+    //在input框输入，给对应的内容添加高亮
+
+    var app = angular.module('app',[]);
+    app.controller('jiako',function($scope,$filter){
+        $scope.text = "一段文本，很长很长，"
+    })
+                        
+    app.filter('hi',function(){
+        return function(elevalue,keyword){
+            var output = elevalue;
+            output = output.split(keyword).join('<span style="color:red">'+keyword+'</span>');
+            return output;
+        }
+    })
+
+    //再自定义过滤器，处理改变后的html
+                             //使用$sce服务，信任该html结构，让其渲染在页面上
+    app.filter('whtml',function($sce){
+        return function(elevalue){
+            return $sce.trustAsHtml(elevalue)
+        }
+    })
+
+
+
+</script>

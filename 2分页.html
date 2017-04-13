@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>分页</title>
+</head>
+<body>
+    <div ng-controller="huaji">
+        <input type="text" name="" ng-model="search">
+        <button ng-click="paixu()">反排序</button>
+        <ul>
+            <li ng-repeat="p in arr | filter:{ name:search} | orderBy:'age':bool | limitTo : everypage: page" >name:{{p.name}} , age:{{p.age}} , skill:{{p.skill}}</li>
+        </ul>
+        <button ng-click = "pre(everypage)">pre</button>
+        <button ng-click = "next(everypage)">next</button>
+        <button ng-click = "npage(1)">第一页</button>
+        <button ng-click = "npage(2)">第二页</button>
+        <p>当前为第 {{}} 页</p>
+
+        每页显示<input type="text" ng-model="everypage">行
+    </div>
+    
+</body>
+</html>
+<script type="text/javascript" src="../lib/angular.js"></script>
+<script type="text/javascript">
+    var app = angular.module('app',[]);
+    app.controller('huaji',function($scope){
+        $scope.search = '';
+        $scope.arr = [
+                {name:'huaji',age:18,skill:'HTML'},
+                {name:'huaji',age:17,skill:'css'},
+                {name:'huaji',age:19,skill:'jquery'},
+                {name:'huaji',age:16,skill:'angular'},
+                {name:'老胡',age:28,skill:'css'},
+                {name:'老雷',age:38,skill:'angular'},
+                {name:'老梁',age:17,skill:'jquery'}
+                ];
+
+        $scope.bool = false;
+        $scope.paixu=function(){
+            $scope.bool = !$scope.bool;
+        }
+
+        $scope.everypage = 2;
+
+        $scope.page = 0;
+
+        $scope.next = function(num){
+            //num为每页显示的条数，page为下标（截取位置）
+            //page = 第一页:0,  第二页:2,  第三页:4     
+            $scope.page += (num-1)*2;
+        } 
+
+        $scope.pre = function(num){
+            if($scope.page==0){
+                $scope.page = 0;
+            }else{
+                $scope.page -= (num-1)*2;
+            }
+        }
+
+        $scope.npage = function(num){
+            $scope.page = (num-1)*2;
+        }
+
+
+    })
+</script>

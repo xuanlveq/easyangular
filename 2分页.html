@@ -48,15 +48,17 @@
 
         $scope.next = function(num){
             //num为每页显示的条数，page为下标（截取位置）
-            //page = 第一页:0,  第二页:2,  第三页:4     
-            $scope.page += (num-1)*2;
+            //page = 第一页:0,  第二页:2,  第三页:4 
+            if( $scope.page < $scope.arr.length - num){
+                $scope.page += num;
+            }else{}    
         } 
 
         $scope.pre = function(num){
             if($scope.page==0){
                 $scope.page = 0;
             }else{
-                $scope.page -= (num-1)*2;
+                $scope.page -= num;
             }
         }
 
